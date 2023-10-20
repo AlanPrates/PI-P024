@@ -22,7 +22,7 @@ Este é um projeto de um sistema de controle de pacotes turísticos implementado
 10. Permitir a consulta dos pacotes contratados por um cliente específico.
 11. Permitir a consulta dos clientes que contrataram um pacote específico.
 
-## Como Compilar e Executar
+## Exemplo de Como Compilar e Executar
 Para compilar o projeto, utilize um compilador C++ compatível com C++11 ou superior.
 
 ```bash
