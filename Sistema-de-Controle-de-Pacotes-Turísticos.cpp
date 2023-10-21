@@ -1,78 +1,79 @@
 #include <iostream>
 #include <vector>
 #include <string>
+using namespace std;
 
 class Evento {
 private:
-    std::string nome;
-    std::string data;
+    string nome;
+    string data;
 
 public:
-    Evento(std::string nome, std::string data) : nome(nome), data(data) {}
-    std::string getNome() const { return nome; }
-    std::string getData() const { return data; }
+    Evento(string nome, string data) : nome(nome), data(data) {}
+    string getNome() const { return nome; }
+    string getData() const { return data; }
 };
 
 class Pacote {
 private:
-    std::string nome;
-    std::vector<Evento> eventos;
+    string nome;
+    vector<Evento> eventos;
 
 public:
-    Pacote(std::string nome) : nome(nome) {}
+    Pacote(string nome) : nome(nome) {}
     void adicionarEvento(Evento evento) { eventos.push_back(evento); }
-    std::string getNome() const { return nome; }
-    const std::vector<Evento>& getEventos() const { return eventos; }
+    string getNome() const { return nome; }
+    const vector<Evento>& getEventos() const { return eventos; }
 };
 
 class Dependente {
 private:
-    std::string nome;
+    string nome;
 
 public:
-    Dependente(std::string nome) : nome(nome) {}
-    std::string getNome() const { return nome; }
+    Dependente(string nome) : nome(nome) {}
+    string getNome() const { return nome; }
 };
 
 class Cliente {
 private:
-    std::string nome;
-    std::vector<Dependente> dependentes;
+    string nome;
+    vector<Dependente> dependentes;
     Pacote pacoteContratado;
 
 public:
-    Cliente(std::string nome) : nome(nome), pacoteContratado("") {}
+    Cliente(string nome) : nome(nome), pacoteContratado("") {}
     void adicionarDependente(Dependente dependente) { dependentes.push_back(dependente); }
     void contratarPacote(Pacote pacote) { pacoteContratado = pacote; }
-    std::string getNome() const { return nome; }
-    const std::vector<Dependente>& getDependentes() const { return dependentes; }
+    string getNome() const { return nome; }
+    const vector<Dependente>& getDependentes() const { return dependentes; }
     const Pacote& getPacoteContratado() const { return pacoteContratado; }
 };
 
-void cadastrarEvento(std::vector<Evento>& eventos) {
-    std::string nome, data;
-    std::cout << "Nome do Evento: ";
-    std::cin >> nome;
-    std::cout << "Data do Evento (AAAA-MM-DD): ";
-    std::cin >> data;
+void cadastrarEvento(vector<Evento>& eventos) {
+    string nome, data;
+    cout << "Nome do Evento: ";
+    cin >> nome;
+    cout << "Data do Evento (AAAA-MM-DD): ";
+    cin >> data;
     eventos.push_back(Evento(nome, data));
 }
 
-void cadastrarPacote(std::vector<Pacote>& pacotes, const std::vector<Evento>& eventos) {
-    std::string nomePacote;
-    std::cout << "Nome do Pacote: ";
-    std::cin >> nomePacote;
+void cadastrarPacote(vector<Pacote>& pacotes, const vector<Evento>& eventos) {
+    string nomePacote;
+    cout << "Nome do Pacote: ";
+    cin >> nomePacote;
 
     Pacote pacote(nomePacote);
 
     int escolha;
     do {
-        std::cout << "Escolha um evento para adicionar ao pacote:" << std::endl;
+        cout << "Escolha um evento para adicionar ao pacote:" << endl;
         for (size_t i = 0; i < eventos.size(); ++i) {
-            std::cout << i+1 << ". " << eventos[i].getNome() << " (Data: " << eventos[i].getData() << ")" << std::endl;
+            cout << i+1 << ". " << eventos[i].getNome() << " (Data: " << eventos[i].getData() << ")" << endl;
         }
-        std::cout << "0. Concluir cadastro do pacote" << std::endl;
-        std::cin >> escolha;
+        cout << "0. Concluir cadastro do pacote" << endl;
+        cin >> escolha;
 
         if (escolha > 0 && escolha <= static_cast<int>(eventos.size())) {
             pacote.adicionarEvento(eventos[escolha-1]);
@@ -82,20 +83,20 @@ void cadastrarPacote(std::vector<Pacote>& pacotes, const std::vector<Evento>& ev
     pacotes.push_back(pacote);
 }
 
-void cadastrarCliente(std::vector<Cliente>& clientes, const std::vector<Pacote>& pacotes) {
-    std::string nomeCliente;
-    std::cout << "Nome do Cliente: ";
-    std::cin >> nomeCliente;
+void cadastrarCliente(vector<Cliente>& clientes, const vector<Pacote>& pacotes) {
+    string nomeCliente;
+    cout << "Nome do Cliente: ";
+    cin >> nomeCliente;
 
     Cliente cliente(nomeCliente);
 
     int escolha;
     do {
-        std::cout << "Escolha um pacote para o cliente (ou 0 para sair):" << std::endl;
+        cout << "Escolha um pacote para o cliente (ou 0 para sair):" << endl;
         for (size_t i = 0; i < pacotes.size(); ++i) {
-            std::cout << i+1 << ". " << pacotes[i].getNome() << std::endl;
+        cout << i+1 << ". " << pacotes[i].getNome() << endl;
         }
-        std::cin >> escolha;
+        cin >> escolha;
 
         if (escolha > 0 && escolha <= static_cast<int>(pacotes.size())) {
             cliente.contratarPacote(pacotes[escolha-1]);
@@ -105,65 +106,65 @@ void cadastrarCliente(std::vector<Cliente>& clientes, const std::vector<Pacote>&
     clientes.push_back(cliente);
 }
 
-void exibirInformacoes(const std::vector<Evento>& eventos, const std::vector<Pacote>& pacotes, const std::vector<Cliente>& clientes) {
-    std::cout << "\n--- Eventos ---" << std::endl;
+void exibirInformacoes(const vector<Evento>& eventos, const vector<Pacote>& pacotes, const vector<Cliente>& clientes) {
+    cout << "\n--- Eventos ---" << std::endl;
     for (const Evento& evento : eventos) {
-        std::cout << "Nome: " << evento.getNome() << ", Data: " << evento.getData() << std::endl;
+        cout << "Nome: " << evento.getNome() << ", Data: " << evento.getData() << endl;
     }
 
-    std::cout << "\n--- Pacotes ---" << std::endl;
+    cout << "\n--- Pacotes ---" << endl;
     for (const Pacote& pacote : pacotes) {
-        std::cout << "Nome: " << pacote.getNome() << std::endl;
-        const std::vector<Evento>& eventosDoPacote = pacote.getEventos();
+        cout << "Nome: " << pacote.getNome() << endl;
+        const vector<Evento>& eventosDoPacote = pacote.getEventos();
         for (const Evento& evento : eventosDoPacote) {
-            std::cout << "- " << evento.getNome() << " (Data: " << evento.getData() << ")" << std::endl;
+            cout << "- " << evento.getNome() << " (Data: " << evento.getData() << ")" << endl;
         }
     }
 
-    std::cout << "\n--- Clientes ---" << std::endl;
+    cout << "\n--- Clientes ---" << endl;
     for (const Cliente& cliente : clientes) {
-        std::cout << "Nome do Cliente: " << cliente.getNome() << std::endl;
+        cout << "Nome do Cliente: " << cliente.getNome() << endl;
         const Pacote& pacoteContratado = cliente.getPacoteContratado();
         if (pacoteContratado.getNome() != "") {
-            std::cout << "Pacote Contratado: " << pacoteContratado.getNome() << std::endl;
-            const std::vector<Evento>& eventosDoPacote = pacoteContratado.getEventos();
+            cout << "Pacote Contratado: " << pacoteContratado.getNome() << endl;
+            const vector<Evento>& eventosDoPacote = pacoteContratado.getEventos();
             for (const Evento& evento : eventosDoPacote) {
-                std::cout << "- " << evento.getNome() << " (Data: " << evento.getData() << ")" << std::endl;
+                cout << "- " << evento.getNome() << " (Data: " << evento.getData() << ")" << endl;
             }
         }
         else {
-            std::cout << "Cliente ainda não contratou nenhum pacote." << std::endl;
+            cout << "Cliente ainda não contratou nenhum pacote." << endl;
         }
 
-        const std::vector<Dependente>& dependentes = cliente.getDependentes();
+        const vector<Dependente>& dependentes = cliente.getDependentes();
         if (!dependentes.empty()) {
-            std::cout << "Dependentes:" << std::endl;
+            cout << "Dependentes:" << endl;
             for (const Dependente& dependente : dependentes) {
-                std::cout << "- " << dependente.getNome() << std::endl;
+                cout << "- " << dependente.getNome() << endl;
             }
         }
         else {
-            std::cout << "Cliente não possui dependentes." << std::endl;
+            cout << "Cliente não possui dependentes." << endl;
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }
 
 int main() {
-    std::vector<Evento> eventos;
-    std::vector<Pacote> pacotes;
-    std::vector<Cliente> clientes;
+    vector<Evento> eventos;
+    vector<Pacote> pacotes;
+    vector<Cliente> clientes;
 
     int escolha;
 
     do {
-        std::cout << "\nMenu Principal:" << std::endl;
-        std::cout << "1. Cadastrar Evento" << std::endl;
-        std::cout << "2. Cadastrar Pacote" << std::endl;
-        std::cout << "3. Cadastrar Cliente" << std::endl;
-        std::cout << "4. Exibir Informações" << std::endl;
-        std::cout << "5. Sair" << std::endl;
-        std::cin >> escolha;
+        cout << "\nMenu Principal:" <<endl;
+        cout << "1. Cadastrar Evento" << endl;
+        cout << "2. Cadastrar Pacote" << endl;
+        cout << "3. Cadastrar Cliente" << endl;
+        cout << "4. Exibir Informações" << endl;
+        cout << "5. Sair" << endl;
+        cin >> escolha;
 
         switch (escolha) {
             case 1:
@@ -179,10 +180,10 @@ int main() {
                 exibirInformacoes(eventos, pacotes, clientes);
                 break;
             case 5:
-                std::cout << "Saindo..." << std::endl;
+                cout << "Saindo..." << endl;
                 break;
             default:
-                std::cout << "Opção inválida. Tente novamente." << std::endl;
+                cout << "Opção inválida. Tente novamente." << endl;
         }
     } while (escolha != 5);
 
